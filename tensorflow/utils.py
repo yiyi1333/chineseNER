@@ -142,8 +142,9 @@ def padding_word(sen):
                   
 def test_input(model,sess,word2id,id2tag,batch_size):
     while True:
-        text = raw_input("Enter your input: ").decode('utf-8');
-        text = re.split(u'[，。！？、‘’“”（）]', text) 
+        text = raw_input("Enter your input: ").decode('gbk')
+        text = re.split(u'[，。！？、‘’“”（）]', text)
+        print text
         text_id=[]
         for sen in text:
             word_id=[]

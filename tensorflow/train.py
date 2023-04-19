@@ -7,7 +7,6 @@ import sys
 import math
 
 import numpy as np
-
 import tensorflow as tf
 from Batch import BatchGenerator
 from bilstm_crf import Model
@@ -35,7 +34,7 @@ data_test = BatchGenerator(x_test, y_test, shuffle=False)
 print 'Finished creating the data generator.'
 
 
-epochs = 31
+epochs = 51
 batch_size = 32
 
 config = {}
@@ -50,6 +49,7 @@ config["pretrained"]=False
 
 embedding_pre = []
 if len(sys.argv)==2 and sys.argv[1]=="pretrained":
+    print '-----------------------pretrained-----------------------'
     print "use pretrained embedding"
     config["pretrained"]=True
     word2vec = {}
@@ -72,6 +72,7 @@ if len(sys.argv)==2 and sys.argv[1]=="pretrained":
     
     
 if len(sys.argv)==2 and sys.argv[1]=="test":
+    print '-----------------------test-----------------------'
     print "begin to test..."
     model = Model(config,embedding_pre,dropout_keep=1)
     with tf.Session() as sess:
@@ -84,6 +85,7 @@ if len(sys.argv)==2 and sys.argv[1]=="test":
             path = ckpt.model_checkpoint_path
             print 'loading pre-trained model from %s.....' % path
             saver.restore(sess, path)
+            print "begin to test..."
             test_input(model,sess,word2id,id2tag,batch_size)
             
             
